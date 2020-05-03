@@ -4,3 +4,5 @@
 src/mycreds\.txt
 
 src/client_secrets\.json
+
+src/__pycache__/
