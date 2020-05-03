@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from citation import get_citation
+from citation import get_citation, get_cite_id, get_title
 from defaults import return_defaults
 
 
@@ -8,17 +8,6 @@ def write_local_pdf(pdf_req, pdf_name=None, local_dir_path=None):
     write_path = Path(local_dir_path).joinpath(f"{pdf_name}.pdf")
     open(write_path, "wb").write(pdf_req.content)
     return write_path
-
-
-def get_title(citation):
-    # title = citation.split("=")
-    title = None
-    return title
-
-
-def get_cite_id(citation):
-    citation = None
-    return citation
 
 
 if __name__ == "__main__":
@@ -34,7 +23,10 @@ if __name__ == "__main__":
     print("citation obtained")
 
     pdf_title = get_title(citation)
+    print(pdf_title)
+
     citation_id = get_cite_id(citation)
+    print(citation_id)
 
     pdf_url = abs_url.replace("abs", "pdf")
 

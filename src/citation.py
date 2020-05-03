@@ -62,3 +62,24 @@ def get_citation(abs_url):
         raise ValueError(f"no citation found in {content}")
 
     return citation
+
+
+def get_title(citation):
+    contents = []
+    for c in citation.split(","):
+        contents.extend(c.split("="))
+    contents = [c.rstrip(" ").lstrip("\n").lstrip(" ") for c in contents]
+    title_ind = contents.index("title")
+    title_content = contents[title_ind + 1]
+
+    start = title_content.find("{") + len("{")
+    end = title_content.find("}")
+    title = title_content[start:end]
+
+    return title
+
+
+def get_cite_id(citation):
+    citation = citation.split(",")[0]
+    cite_id = citation.split("{")[1]
+    return cite_id
