@@ -5,6 +5,7 @@ import requests
 from citation import get_citation, get_cite_id, get_title
 from defaults import return_defaults
 from g_drive import upload_file_to_drive_folder
+from todo import create_todoist_task
 
 
 def write_local_pdf(pdf_req, pdf_name=None, local_dir_path=None):
@@ -36,6 +37,8 @@ def write_to_tex_file(tex_path, pdf_title, citation_id, tex_wrap):
 if __name__ == "__main__":
     pass
     # TODO: convert to cli
+    # TODO: add logging + verbosity flag
+
     defaults = return_defaults()
 
     # TODO: config -- currently hardcoded
@@ -59,27 +62,37 @@ if __name__ == "__main__":
     print(f"pdf written locally: {local_pdf_path}")
 
     # upload to google drive from local
+    # TODO: only upload if not present
     upload_file_to_drive_folder(
         defaults["drive_folder_name"], pdf_name, local_pdf_path=local_pdf_path
     )
     print(f"pdf written to drive: {pdf_name}")
 
-    # TODO: add to bibfile
+    # TODO: only add to bibfile if not present
     # can select which bibfile/location
     write_to_bib_file(defaults["bib_path"], citation)
     print("citation written to bibfile")
 
+    # TODO: only add to texfile if not present
     # TODO: create TD citation in .tex file
     write_to_tex_file(
         defaults["tex_path"], pdf_title, citation_id, defaults["tex_wrap"]
     )
     print("citation written to texfile")
 
-    # TODO: send to remarkable
-    # maybe: https://github.com/dvandyk/syncrm
-
     # TODO: create todoist item
     # maybe: https://github.com/Doist/todoist-python
+    create_todoist_task(
+        pdf_title,
+        citation_id,
+        abs_url,
+        project_name=defaults["todoist"]["project"],
+        days_due=defaults["todoist"]["days_due"],
+    )
+    print("todoist item added")
+
+    # TODO: send to remarkable
+    # maybe: https://github.com/dvandyk/syncrm
 
     # TODO: maybe delete local paper
 
