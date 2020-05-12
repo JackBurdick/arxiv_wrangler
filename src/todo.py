@@ -41,4 +41,5 @@ def create_todoist_task(
             raise type(e)(f"project id may not have been found  - full error: {e}")
     else:
         # the item is already present
-        print(f"item {task_name} already in {project_name} and not added")
+        pass
+        # print(f"item {task_name} already in {project_name} and not added")

@@ -6,3 +6,7 @@ src/mycreds\.txt
 src/client_secrets\.json
 
 src/__pycache__/
+
+src/papers/
+
+src/todoist_config\.py

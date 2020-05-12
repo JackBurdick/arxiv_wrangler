@@ -50,21 +50,29 @@ def _get_target_folder_id(
     return target_id
 
 
+def _does_file_exist(drive, file_name):
+    file_list = drive.ListFile({"q": f"title = '{file_name}.pdf'"}).GetList()
+    return file_list
+
+
 def upload_file_to_drive_folder(drive_folder_name, file_name, local_pdf_path):
 
     drive = _obtain_authenticated_drive()
 
-    folder_id = _get_target_folder_id(drive, folder_name=drive_folder_name)
+    ret = _does_file_exist(drive, file_name)
+    if not ret:
+        # only create + upload if it doesn't already exist
+        folder_id = _get_target_folder_id(drive, folder_name=drive_folder_name)
 
-    file_metadata = {
-        "title": f"{file_name}.pdf",
-        "parents": [{"id": folder_id, "kind": "drive#childList"}],
-    }
+        file_metadata = {
+            "title": f"{file_name}.pdf",
+            "parents": [{"id": folder_id, "kind": "drive#childList"}],
+        }
 
-    file_drive = drive.CreateFile(file_metadata)
+        file_drive = drive.CreateFile(file_metadata)
 
-    file_drive.SetContentFile(f"{local_pdf_path}")
+        file_drive.SetContentFile(f"{local_pdf_path}")
 
-    # if you want to convert a file to a doc, can use, but this doesn't work
-    # well for pdfs: file_drive.Upload({"convert": True})
-    file_drive.Upload()
+        # if you want to convert a file to a doc, can use, but this doesn't work
+        # well for pdfs: file_drive.Upload({"convert": True})
+        file_drive.Upload()
