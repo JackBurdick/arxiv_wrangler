@@ -44,9 +44,10 @@ def main(abs_url: str):
     )
 
     # add to specified bib file and tex file if not already present in bib file
+    # TODO: change this citation generation + look up to scholar
     citation_exists = does_citation_exist(defaults["bib_path"], citation_id)
     if not citation_exists:
-        write_to_bib_file(defaults["bib_path"], citation_id)
+        write_to_bib_file(defaults["bib_path"], citation)
 
         write_to_tex_file(
             defaults["tex_path"], pdf_title, citation_id, defaults["tex_wrap"]
@@ -60,6 +61,8 @@ def main(abs_url: str):
         project_name=defaults["todoist"]["project"],
         days_due=defaults["todoist"]["days_due"],
     )
+
+    # TODO: remarkable https://github.com/reHackable/awesome-reMarkable
 
     # TODO: it would be interesting to be able to which papers are being
     # downloaded

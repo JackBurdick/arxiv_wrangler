@@ -14,8 +14,9 @@ def does_citation_exist(path, citation):
 def write_to_bib_file(path, citation):
 
     # TODO: make sure citation isn't already present
+    write_str = f"\n{citation}\n"
     with open(path, "a") as myfile:
-        myfile.write(citation)
+        myfile.write(write_str)
 
 
 def write_to_tex_file(tex_path, pdf_title, citation_id, tex_wrap):
