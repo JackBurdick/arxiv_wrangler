@@ -23,7 +23,10 @@ def _get_citation_url(abs_url, class_id, target_str):
     if len(content) > 1:
         raise ValueError("content in {class_id} is bigger than expected")
     else:
-        content = content[0]
+        try:
+            content = content[0]
+        except IndexError:
+            return None
 
     # ref link
     list_items = "a"
@@ -42,6 +45,8 @@ def _get_citation_url(abs_url, class_id, target_str):
 
 def _get_dblp(abs_url):
     bibtex_url = _get_citation_url(abs_url, "dblp", "bibtex")
+    if not bibtex_url:
+        return None
 
     bibtex_resp = requests.get(bibtex_url)
     content = BeautifulSoup(bibtex_resp.content, "html.parser")
@@ -65,6 +70,8 @@ def _get_dblp(abs_url):
 
 def _get_semscholar(abs_url):
     scholar_url = _get_citation_url(abs_url, "extra-ref-cite", "semanticscholar")
+    if not scholar_url:
+        return None
 
     scholar_resp = requests.get(scholar_url)
     content = BeautifulSoup(scholar_resp.content, "html.parser")
