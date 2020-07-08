@@ -113,7 +113,7 @@ def get_citation(abs_url):
         # """
 
     if not citation:
-        raise ValueError(f"no citation found in {content}")
+        raise ValueError(f"no citation found in {abs_url}")
 
     return citation
 

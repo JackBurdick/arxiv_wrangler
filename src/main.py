@@ -16,10 +16,19 @@ def write_local_pdf(pdf_req, pdf_name=None, local_dir_path=None):
     return write_path
 
 
-def main(abs_url: str):
+def main(raw_url: str):
+
+    # only support arxiv so far
+    if not raw_url.startswith("https://arxiv.org"):
+        raise ValueError(f"please use arxiv.org/abs url, not {raw_url}")
+
+    if ".org/pdf/" in raw_url:
+        raw_url = raw_url.replace("/pdf/", "/abs/")
+        abs_url = raw_url.rstrip("pdf").rstrip(".")
+    else:
+        abs_url = raw_url
+
     # TODO: add logging + verbosity flag
-    if "arxiv.org/abs" not in abs_url:
-        raise ValueError(f"please use arxiv.org/abs url, not {abs_url}")
 
     defaults = return_defaults()
 
