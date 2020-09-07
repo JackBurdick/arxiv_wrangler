@@ -55,7 +55,10 @@ def main(raw_url: str):
     # add to specified bib file and tex file if not already present in bib file
     # TODO: change this citation generation + look up to scholar
     citation_exists = does_citation_exist(defaults["bib_path"], citation_id)
-    if not citation_exists:
+    if citation_exists:
+        print(f"already cited: {citation_id} \n(in: {defaults['bib_path']})")
+    else:
+        print(citation_id)
         write_to_bib_file(defaults["bib_path"], citation)
 
         write_to_tex_file(
