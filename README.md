@@ -14,3 +14,6 @@ and ~maybe:
 
 ## integrations
 todoist -- todoist web app > settings > integrations > `API token`
+
+## TODO:
+- onedrive: https://github.com/jsnm-repo/Python-OneDriveAPI-FileUpload, https://dev.to/jsnmtr/automating-files-upload-to-microsoft-onedrive-unexpected-challenges-and-a-success-story-2ini

@@ -11,8 +11,10 @@ from todo import create_todoist_task
 
 
 def write_local_pdf(pdf_req, pdf_name=None, local_dir_path=None):
+    Path(local_dir_path).mkdir(parents=True, exist_ok=True)
     write_path = Path(local_dir_path).joinpath(f"{pdf_name}.pdf")
-    open(write_path, "wb").write(pdf_req.content)
+    with open(write_path, "wb") as fh:
+        fh.write(pdf_req.content)
     return write_path
 
 
@@ -48,9 +50,12 @@ def main(raw_url: str):
     )
 
     # upload to google drive from local, if not present
-    upload_file_to_drive_folder(
-        defaults["drive_folder_name"], pdf_name, local_pdf_path=local_pdf_path
-    )
+    try:
+        upload_file_to_drive_folder(
+            defaults["drive_folder_name"], pdf_name, local_pdf_path=local_pdf_path
+        )
+    except KeyError:
+        pass
 
     # add to specified bib file and tex file if not already present in bib file
     # TODO: change this citation generation + look up to scholar

@@ -20,8 +20,8 @@ def _get_citation_url(abs_url, class_id, target_str):
 
     # inner
     content = content.find_all(attrs={"class": class_id})
-    if len(content) > 1:
-        raise ValueError("content in {class_id} is bigger than expected")
+    if len(content) > 2:
+        raise ValueError(f"content in (class_id)({class_id}) is bigger than expected - {content}")
     else:
         try:
             content = content[0]
